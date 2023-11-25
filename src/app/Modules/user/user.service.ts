@@ -18,9 +18,13 @@ const getSingleUserFromDB = async (id: number) => {
   }
   return result;
 };
-
+const deleteSingleUserFromDB = async (id: number) => {
+  const result = await UserModel.deleteOne({ userId: id });
+  return result;
+};
 export const userService = {
   createUserIntoDB,
   getAllUsersFromDB,
   getSingleUserFromDB,
+  deleteSingleUserFromDB,
 };
