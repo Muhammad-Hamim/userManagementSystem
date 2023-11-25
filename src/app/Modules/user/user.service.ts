@@ -13,6 +13,9 @@ const getAllUsersFromDB = async () => {
 
 const getSingleUserFromDB = async (id: number) => {
   const result = await UserModel.findOne({ userId: id });
+  if (!result) {
+    throw new Error(`User with ID ${id} not found`);
+  }
   return result;
 };
 
