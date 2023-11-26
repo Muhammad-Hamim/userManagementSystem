@@ -1,7 +1,9 @@
 import { Schema, model } from 'mongoose';
-import { User } from './user/user.interface';
+import { TUser, userMethods, userModel } from './user/user.interface';
+import bcrypt from 'bcrypt';
+import config from '../config';
 
-const userSchema = new Schema<User>({
+const userSchema = new Schema<TUser, userModel, userMethods>({
   userId: {
     type: Number,
     required: [true, 'userId is required'],
@@ -36,4 +38,20 @@ const userSchema = new Schema<User>({
   // ],
 });
 
-export const UserModel = model<User>('User', userSchema);
+userSchema.pre('save', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
+});
+
+//create a function to check whether a user is exists or not
+userSchema.methods.isUserExists = async function (id: number) {
+  const existingUser = await User.findOne({ userId: id });
+  return existingUser;
+};
+
+export const User = model<TUser, userModel>('User', userSchema);

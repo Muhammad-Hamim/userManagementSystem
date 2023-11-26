@@ -25,10 +25,10 @@ const createUser = async (req: Request, res: Response) => {
       message: 'user created successfully',
       data: result,
     });
-  } catch (err) {
+  } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: 'Something went wrong',
+      message: err.message || 'Something went wrong',
       data: err,
     });
   }
@@ -76,10 +76,10 @@ const deleteSingleUser = async (req: Request, res: Response) => {
       message: 'user data deleted successfully',
       data: result,
     });
-  } catch (err) {
+  } catch (err: any) {
     res.status(500).json({
       success: false,
-      message: 'something went wrong',
+      message: err.message || 'something went wrong',
       data: err,
     });
   }
