@@ -26,7 +26,10 @@ const getSingleUserFromDB = async (id: number) => {
   return result;
 };
 const deleteSingleUserFromDB = async (id: number) => {
-  const result = await User.deleteOne({ userId: id });
+  const result = await User.updateOne(
+    { userId: id },
+    { $set: { isDeleted: true } },
+  );
   if (!result) {
     throw new Error(`User with ID ${id} not found`);
   }

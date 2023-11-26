@@ -69,6 +69,7 @@ const userValidationSchema = Joi.object({
       'object.base': 'address must be an object',
       'any.required': 'address is required',
     }),
+  isDeleted: Joi.boolean().default(false),
   // orders: Joi.array().items(Joi.object({
   //   productName: Joi.string().required().messages({
   //     'string.base': 'productName must be a string',

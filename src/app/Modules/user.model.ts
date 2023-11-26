@@ -29,6 +29,7 @@ const userSchema = new Schema<TUser, userModel, userMethods>({
     city: { type: String, required: [true, 'city is required'] },
     country: { type: String, required: [true, 'country is required'] },
   },
+  isDeleted: { type: Boolean, default: false },
   // orders: [
   //   {
   //     productName: { type: String, required: [true, 'productName is required'] },
@@ -38,13 +39,30 @@ const userSchema = new Schema<TUser, userModel, userMethods>({
   // ],
 });
 
+// pre save middleware
 userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
+  // hasing password and save into db
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_rounds),
   );
+  next();
+});
+//post save middleware / hook
+userSchema.post('save', function (doc, next) {
+  doc.password = '';
+  next();
+});
+
+// query middleware
+userSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+userSchema.pre('findOne', function (next) {
+  this.findOne({ isDeleted: { $ne: true } });
   next();
 });
 
