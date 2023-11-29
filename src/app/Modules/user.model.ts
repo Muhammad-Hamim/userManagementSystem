@@ -66,7 +66,6 @@ userSchema.pre(/^find/, function (this: Query<TUser, Document>, next) {
   next();
 });
 
-
 //create a function to check whether a user is exists or not
 userSchema.methods.isUserExists = async function (id: number) {
   const existingUser = await User.findOne({ userId: id });
