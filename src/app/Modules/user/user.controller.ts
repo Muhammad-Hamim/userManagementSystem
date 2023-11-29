@@ -167,7 +167,40 @@ const createOrder = async (req: Request, res: Response) => {
     });
   }
 };
-
+const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const result = await userService.getAllOrdersFromDB(userId);
+    res.status(200).json({
+      success: true,
+      message: 'orders data retrieved successfully',
+      data: result,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'data does not exist',
+      data: err,
+    });
+  }
+};
+const getAllOrdersPrice = async (req: Request, res: Response) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const result = await userService.getOrdersTotalPriceFromDB(userId);
+    res.status(200).json({
+      success: true,
+      message: 'orders total price retrieved successfully',
+      data: result,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'data does not exist',
+      data: err,
+    });
+  }
+};
 export const userController = {
   createUser,
   getAllUsers,
@@ -175,4 +208,6 @@ export const userController = {
   deleteSingleUser,
   updateUserInfo,
   createOrder,
+  getAllOrders,
+  getAllOrdersPrice,
 };

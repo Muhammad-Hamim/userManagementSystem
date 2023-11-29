@@ -65,10 +65,7 @@ userSchema.pre(/^find/, function (this: Query<TUser, Document>, next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
-// userSchema.pre('updateOne', function (next) {
-//   this.updateOne({}, { isDeleted: { $ne: false } });
-//   next();
-// });
+
 
 //create a function to check whether a user is exists or not
 userSchema.methods.isUserExists = async function (id: number) {

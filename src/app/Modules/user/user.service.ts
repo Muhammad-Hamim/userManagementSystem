@@ -65,7 +65,35 @@ const createOrderToDB = async (userId: number, orderData: Partial<TUser>) => {
     throw new Error(`user does not exists with this id ${userId}`);
   }
 };
-
+const getAllOrdersFromDB = async (userId: number) => {
+  const user = new User();
+  if (await user.isUserExists(userId)) {
+    const result = await User.findOne({ userId: userId }, { orders: 1 });
+    return result;
+  } else {
+    throw new Error(`user does not exists with this id ${userId}`);
+  }
+};
+const getOrdersTotalPriceFromDB = async (userId: number) => {
+  const user = new User();
+  if (await user.isUserExists(userId)) {
+    const result = await User.aggregate([
+      { $match: { userId: userId } },
+      { $unwind: '$orders' },
+      {
+        $group: {
+          _id: null,
+          totalPrice: {
+            $sum: { $multiply: ['$orders.price', '$orders.quantity'] },
+          },
+        },
+      },
+    ]);
+    return result;
+  } else {
+    throw new Error(`user does not exists with this id ${userId}`);
+  }
+};
 export const userService = {
   createUserIntoDB,
   getAllUsersFromDB,
@@ -73,4 +101,6 @@ export const userService = {
   deleteSingleUserFromDB,
   updateUserInfoInDB,
   createOrderToDB,
+  getAllOrdersFromDB,
+  getOrdersTotalPriceFromDB,
 };
