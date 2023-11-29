@@ -70,23 +70,28 @@ const userValidationSchema = Joi.object({
       'any.required': 'address is required',
     }),
   isDeleted: Joi.boolean().default(false),
-  // orders: Joi.array().items(Joi.object({
-  //   productName: Joi.string().required().messages({
-  //     'string.base': 'productName must be a string',
-  //     'any.required': 'productName is required',
-  //   }),
-  //   price: Joi.number().required().messages({
-  //     'number.base': 'price must be a number',
-  //     'any.required': 'price is required',
-  //   }),
-  //   quantity: Joi.number().required().messages({
-  //     'number.base': 'quantity must be a number',
-  //     'any.required': 'quantity is required',
-  //   }),
-  // })).messages({
-  //   'array.base': 'orders must be an array',
-  //   'any.required': 'orders are required',
-  // }),
+  orders: Joi.array()
+    .items(
+      Joi.object({
+        productName: Joi.string().required().messages({
+          'string.base': 'productName must be a string',
+          'any.required': 'productName is required',
+        }),
+        price: Joi.number().required().messages({
+          'number.base': 'price must be a number',
+          'any.required': 'price is required',
+        }),
+        quantity: Joi.number().required().messages({
+          'number.base': 'quantity must be a number',
+          'any.required': 'quantity is required',
+        }),
+      }),
+    )
+    .optional()
+    .messages({
+      'array.base': 'orders must be an array',
+      'any.required': 'orders are required',
+    }),
 });
 
 export default userValidationSchema;

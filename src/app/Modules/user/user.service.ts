@@ -18,26 +18,59 @@ const getAllUsersFromDB = async () => {
   return result;
 };
 
-const getSingleUserFromDB = async (id: number) => {
-  const result = await User.findOne({ userId: id });
+const getSingleUserFromDB = async (userId: number) => {
+  const result = await User.findOne({ userId: userId });
   if (!result) {
-    throw new Error(`User with ID ${id} not found`);
+    throw new Error(`User with ID ${userId} not found`);
   }
   return result;
 };
-const deleteSingleUserFromDB = async (id: number) => {
+const deleteSingleUserFromDB = async (userId: number) => {
   const result = await User.updateOne(
-    { userId: id },
+    { userId: userId },
     { $set: { isDeleted: true } },
   );
   if (!result) {
-    throw new Error(`User with ID ${id} not found`);
+    throw new Error(`User with ID ${userId} not found`);
   }
   return result;
 };
+const updateUserInfoInDB = async (
+  userId: number,
+  updatedData: Partial<TUser>,
+) => {
+  const result = await User.findOneAndUpdate(
+    { userId: userId },
+    { $set: updatedData },
+    {
+      new: true,
+    },
+  );
+  if (!result) {
+    throw new Error(`User with ID ${userId} not found`);
+  }
+  return result;
+};
+
+const createOrderToDB = async (userId: number, orderData: Partial<TUser>) => {
+  const user = new User();
+  if (await user.isUserExists(userId)) {
+    const result = await User.findOneAndUpdate(
+      { userId: userId },
+      { $addToSet: { orders: orderData } },
+    );
+
+    return result;
+  } else {
+    throw new Error(`user does not exists with this id ${userId}`);
+  }
+};
+
 export const userService = {
   createUserIntoDB,
   getAllUsersFromDB,
   getSingleUserFromDB,
   deleteSingleUserFromDB,
+  updateUserInfoInDB,
+  createOrderToDB,
 };

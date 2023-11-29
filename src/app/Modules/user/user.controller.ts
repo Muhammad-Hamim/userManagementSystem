@@ -25,12 +25,20 @@ const createUser = async (req: Request, res: Response) => {
       message: 'user created successfully',
       data: result,
     });
-  } catch (err: any) {
-    res.status(500).json({
-      success: false,
-      message: err.message || 'Something went wrong',
-      data: err,
-    });
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(500).json({
+        success: false,
+        message: err.message || 'Something went wrong',
+        data: err,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'Unknown error occurred',
+        data: err,
+      });
+    }
   }
 };
 
@@ -52,7 +60,7 @@ const getAllUsers = async (req: Request, res: Response) => {
 };
 const getSingleUser = async (req: Request, res: Response) => {
   try {
-    const userId = parseInt(req.params.id);
+    const userId = parseInt(req.params.userId);
     const result = await userService.getSingleUserFromDB(userId);
     res.status(200).json({
       success: true,
@@ -69,24 +77,102 @@ const getSingleUser = async (req: Request, res: Response) => {
 };
 const deleteSingleUser = async (req: Request, res: Response) => {
   try {
-    const userId = parseInt(req.params.id);
+    const userId = parseInt(req.params.userId);
     const result = await userService.deleteSingleUserFromDB(userId);
     res.status(200).json({
       success: true,
       message: 'user data deleted successfully',
       data: result,
     });
-  } catch (err: any) {
+  } catch (err) {
+    // res.status(500).json({
+    //   success: false,
+    //   message: err.message || 'something went wrong',
+    //   data: err,
+    // });
+    if (err instanceof Error) {
+      res.status(500).json({
+        success: false,
+        message: err.message || 'Something went wrong',
+        data: err,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'Unknown error occurred',
+        data: err,
+      });
+    }
+  }
+};
+
+const updateUserInfo = async (req: Request, res: Response) => {
+  try {
+    const userId = Number(req.params.userId);
+    const updatedData = req.body.user;
+    // data validation using joi
+    const { error, value: userValidatedData } =
+      userValidationSchema.validate(updatedData);
+
+    const result = await userService.updateUserInfoInDB(
+      userId,
+      userValidatedData,
+    );
+    if (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Something went wrong from joi',
+        data: error,
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: 'user data updated successfully',
+      data: result,
+    });
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(500).json({
+        success: false,
+        message: err.message || 'Something went wrong',
+        data: err,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'Unknown error occurred',
+        data: err,
+      });
+    }
+  }
+};
+
+const createOrder = async (req: Request, res: Response) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const orderData = req.body.orders;
+
+    const result = await userService.createOrderToDB(userId, orderData);
+    // Check if the update was successful
+    res.status(200).json({
+      success: true,
+      message: 'Order created successfully',
+      data: result,
+    });
+  } catch (err) {
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: 'Unknown error occurred',
       data: err,
     });
   }
 };
+
 export const userController = {
   createUser,
   getAllUsers,
   getSingleUser,
   deleteSingleUser,
+  updateUserInfo,
+  createOrder,
 };

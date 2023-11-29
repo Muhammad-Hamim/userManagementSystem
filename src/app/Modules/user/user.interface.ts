@@ -18,15 +18,15 @@ export type TUser = {
     country: string;
   };
   isDeleted: boolean;
-  // orders: {
-  //   productName: string;
-  //   price: number;
-  //   quantity: number;
-  // }[];
+  orders?:  {
+    productName: string;
+    price: number;
+    quantity: number;
+  }[];
 };
-
 export type userMethods = {
   isUserExists(id: number): Promise<TUser | null>;
 };
+
 
 export type userModel = Model<TUser, Record<string, never>, userMethods>;

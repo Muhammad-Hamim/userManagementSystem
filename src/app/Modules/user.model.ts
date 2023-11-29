@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Document, Query, Schema, model } from 'mongoose';
 import { TUser, userMethods, userModel } from './user/user.interface';
 import bcrypt from 'bcrypt';
 import config from '../config';
@@ -30,26 +30,30 @@ const userSchema = new Schema<TUser, userModel, userMethods>({
     country: { type: String, required: [true, 'country is required'] },
   },
   isDeleted: { type: Boolean, default: false },
-  // orders: [
-  //   {
-  //     productName: { type: String, required: [true, 'productName is required'] },
-  //     price: { type: Number, required: [true, 'price is required'] },
-  //     quantity: { type: Number, required: [true, 'quantity is required'] },
-  //   },
-  // ],
+  orders: [
+    {
+      productName: {
+        type: String,
+        required: [true, 'productName is required'],
+      },
+      price: { type: Number, required: [true, 'price is required'] },
+      quantity: { type: Number, required: [true, 'quantity is required'] },
+    },
+  ],
 });
 
 // pre save middleware
 userSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
-  // hasing password and save into db
+  // hashing password and save into db
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_rounds),
   );
   next();
 });
+
 //post save middleware / hook
 userSchema.post('save', function (doc, next) {
   doc.password = '';
@@ -57,19 +61,18 @@ userSchema.post('save', function (doc, next) {
 });
 
 // query middleware
-userSchema.pre('find', function (next) {
+userSchema.pre(/^find/, function (this: Query<TUser, Document>, next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
-userSchema.pre('findOne', function (next) {
-  this.findOne({ isDeleted: { $ne: true } });
-  next();
-});
+// userSchema.pre('updateOne', function (next) {
+//   this.updateOne({}, { isDeleted: { $ne: false } });
+//   next();
+// });
 
 //create a function to check whether a user is exists or not
 userSchema.methods.isUserExists = async function (id: number) {
   const existingUser = await User.findOne({ userId: id });
   return existingUser;
 };
-
-export const User = model<TUser, userModel>('User', userSchema);
+export const User = model<TUser, userModel>('user', userSchema);
