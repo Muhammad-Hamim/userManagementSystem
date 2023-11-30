@@ -1,4 +1,3 @@
-```plaintext
 # Mongoose Express CRUD Mastery
 
 ## Overview
@@ -50,20 +49,17 @@ npm install
 - Development mode (with auto-reloading):
 
 ```
-
 npm run start:dev
-
 ```
 
 - Production mode:
 
 ```
-
 npm run start:prod
+```
 
-````
 
-The application will run on `http://localhost:5000` by default.
+# The application will run on `http://localhost:5000` by default.
 
 ## API Endpoints
 
@@ -97,7 +93,7 @@ The application will run on `http://localhost:5000` by default.
       }
   }
 }
-  ```
+    ```
 
 2. **Retrieve a list of all users**
 
@@ -137,7 +133,7 @@ The application will run on `http://localhost:5000` by default.
       }
   }
 }
-   ```
+    ```
 
 
 5. **Delete a user**
@@ -159,7 +155,7 @@ The application will run on `http://localhost:5000` by default.
         "quantity": 5
     }
 }
-   ```
+    ```
 
 
 2. **Retrieve all orders for a specific user**
@@ -204,5 +200,5 @@ The application will run on `http://localhost:5000` by default.
 Visit the specified endpoints to interact with the API.
 
 Feel free to reach out for any additional information or assistance.
-````
+
 
