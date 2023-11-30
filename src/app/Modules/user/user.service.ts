@@ -16,7 +16,7 @@ const createUserIntoDB = async (userData: TUser) => {
 const getAllUsersFromDB = async () => {
   const result = await User.find(
     {},
-    { username: 1, fullName: 1, age: 1, email: 1, address: 1 },
+    { userId: 1, username: 1, fullName: 1, age: 1, email: 1, address: 1 },
   );
   return result;
 };
@@ -24,7 +24,7 @@ const getAllUsersFromDB = async () => {
 const getSingleUserFromDB = async (userId: number) => {
   const result = await User.findOne(
     { userId: userId },
-    { username: 1, fullName: 1, age: 1, email: 1, address: 1 },
+    { userId: 1, username: 1, fullName: 1, age: 1, email: 1, address: 1 },
   );
   if (!result) {
     throw new Error(`User with ID ${userId} not found`);
