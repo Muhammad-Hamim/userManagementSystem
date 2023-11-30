@@ -109,8 +109,8 @@ npm run start:prod
 
 - **Endpoint:** `PUT /api/users/:userId`
 - **Request Body:**
- ```json
- {
+```json
+{
     "user": {
     "userId": 202305,
     "username": "aleddx_jones34",
@@ -133,7 +133,7 @@ npm run start:prod
     }
     }
 }
-    ```
+```
 
 
 5. **Delete a user**
@@ -155,7 +155,7 @@ npm run start:prod
       "quantity": 5
   }
   }
-  ```
+ ```
 
 
 2. **Retrieve all orders for a specific user**
