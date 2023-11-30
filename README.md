@@ -69,7 +69,7 @@ npm run start:prod
 - **Endpoint:** `POST /api/users`
 - **Request Body:**
 
-````json
+```json
 {
 "user": {
     "userId": 2023566,
@@ -93,7 +93,9 @@ npm run start:prod
     }
 }
 }
-  ```
+```
+
+
 
 2. **Retrieve a list of all users**
 
