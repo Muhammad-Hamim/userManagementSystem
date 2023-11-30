@@ -58,7 +58,6 @@ npm run start:dev
 npm run start:prod
 ```
 
-
 # The application will run on `http://localhost:5000` by default.
 
 ## API Endpoints
@@ -67,105 +66,106 @@ npm run start:prod
 
 1. **Create a new user**
 
- - **Endpoint:** `POST /api/users`
- - **Request Body:**
-  ```json
-  {
-  "user": {
-      "userId": 2023566,
-      "username": "adventure_seeker",
-      "password": "adventure123",
-      "fullName": {
-          "firstName": "Ethan",
-          "lastName": "Summit"
-      },
-      "age": 28,
-      "email": "ethan.summit@example.com",
-      "isActive": true,
-      "hobbies": [
-          "rock climbing",
-          "skydiving"
-      ],
-      "address": {
-          "street": "456 Mountain Trail",
-          "city": "Adventureburg",
-          "country": "Australia"
-      }
-  }
+- **Endpoint:** `POST /api/users`
+- **Request Body:**
+
+````json
+{
+"user": {
+    "userId": 2023566,
+    "username": "adventure_seeker",
+    "password": "adventure123",
+    "fullName": {
+        "firstName": "Ethan",
+        "lastName": "Summit"
+    },
+    "age": 28,
+    "email": "ethan.summit@example.com",
+    "isActive": true,
+    "hobbies": [
+        "rock climbing",
+        "skydiving"
+    ],
+    "address": {
+        "street": "456 Mountain Trail",
+        "city": "Adventureburg",
+        "country": "Australia"
+    }
 }
-    ```
+}
+  ```
 
 2. **Retrieve a list of all users**
 
- - **Endpoint:** `GET /api/users`
+- **Endpoint:** `GET /api/users`
 
 
 3. **Retrieve a specific user by ID**
 
- - **Endpoint:** `GET /api/users/:userId`
+- **Endpoint:** `GET /api/users/:userId`
 
 
 4. **Update user information**
 
- - **Endpoint:** `PUT /api/users/:userId`
- - **Request Body:**
-   ```json
-   {
-  "user": {
-      "userId": 202305,
-      "username": "aleddx_jones34",
-      "password": "unique_hashed_password",
-      "fullName": {
-          "firstName": "Nazmul",
-          "lastName": "Jones"
-      },
-      "age": 1022,
-      "email": "alex.jos@gmail.com",
-      "isActive": true,
-      "hobbies": [
-          "surfing",
-          "painting"
-      ],
-      "address": {
-          "street": "123 Beachside Ave",
-          "city": "Sunsetville",
-          "country": "Australia"
-      }
-  }
+- **Endpoint:** `PUT /api/users/:userId`
+- **Request Body:**
+ ```json
+ {
+    "user": {
+    "userId": 202305,
+    "username": "aleddx_jones34",
+    "password": "unique_hashed_password",
+    "fullName": {
+        "firstName": "Nazmul",
+        "lastName": "Jones"
+    },
+    "age": 1022,
+    "email": "alex.jos@gmail.com",
+    "isActive": true,
+    "hobbies": [
+        "surfing",
+        "painting"
+    ],
+    "address": {
+        "street": "123 Beachside Ave",
+        "city": "Sunsetville",
+        "country": "Australia"
+    }
+    }
 }
     ```
 
 
 5. **Delete a user**
 
- - **Endpoint:** `DELETE /api/users/:userId`
+- **Endpoint:** `DELETE /api/users/:userId`
 
 
 ### Order Management (Bonus)
 
 1. **Add New Product in Order**
 
- - **Endpoint:** `PUT /api/users/:userId/orders`
- - **Request Body:**
-   ```json
-   {
-    "orders": {
-        "productName": "books",
-        "price": 10,
-        "quantity": 5
-    }
-}
-    ```
+- **Endpoint:** `PUT /api/users/:userId/orders`
+- **Request Body:**
+ ```json
+ {
+  "orders": {
+      "productName": "books",
+      "price": 10,
+      "quantity": 5
+  }
+  }
+  ```
 
 
 2. **Retrieve all orders for a specific user**
 
- - **Endpoint:** `GET /api/users/:userId/orders`
+- **Endpoint:** `GET /api/users/:userId/orders`
 
 
 3. **Calculate Total Price of Orders for a Specific User**
 
- - **Endpoint:** `GET /api/users/:userId/orders/total-price`
+- **Endpoint:** `GET /api/users/:userId/orders/total-price`
 
 
 ## Validation and Error Handling
@@ -194,11 +194,10 @@ npm run start:prod
 2. Install dependencies: `npm install`.
 3. Update MongoDB connection string if necessary.
 4. Run the application:
- - Development mode: `npm run start:dev`.
- - Production mode: `npm run start:prod`.
+- Development mode: `npm run start:dev`.
+- Production mode: `npm run start:prod`.
 
 Visit the specified endpoints to interact with the API.
 
 Feel free to reach out for any additional information or assistance.
-
 
