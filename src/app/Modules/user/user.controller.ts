@@ -109,7 +109,7 @@ const deleteSingleUser = async (req: Request, res: Response) => {
 const updateUserInfo = async (req: Request, res: Response) => {
   try {
     const userId = Number(req.params.userId);
-    const updatedData = req.body.user;
+    const updatedData = req.body;
     // data validation using joi
     const { error, value: userValidatedData } =
       userValidationSchema.validate(updatedData);
