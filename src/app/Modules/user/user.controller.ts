@@ -4,7 +4,7 @@ import userValidationSchema from './user.validation';
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    const { user: userData } = req.body;
+    const userData = req.body;
     // data validation using joi
     const { error, value: userValidatedData } =
       userValidationSchema.validate(userData);
@@ -150,7 +150,7 @@ const updateUserInfo = async (req: Request, res: Response) => {
 const createOrder = async (req: Request, res: Response) => {
   try {
     const userId = parseInt(req.params.userId);
-    const orderData = req.body.orders;
+    const orderData = req.body;
 
     const result = await userService.createOrderToDB(userId, orderData);
     // Check if the update was successful
